@@ -3268,9 +3268,12 @@ class TLSConnection(TLSRecordLayer):
         # log them if necessary
         if self.sslkeylogfile:
             self._log_session_keys([
-                ('EXPORTER_SECRET', clientHello.random, exporter_master_secret),
-                ('CLIENT_TRAFFIC_SECRET_0', clientHello.random, cl_app_traffic),
-                ('SERVER_TRAFFIC_SECRET_0', clientHello.random, sr_app_traffic)
+                ('EXPORTER_SECRET',
+                 clientHello.random, exporter_master_secret),
+                ('CLIENT_TRAFFIC_SECRET_0',
+                 clientHello.random, cl_app_traffic),
+                ('SERVER_TRAFFIC_SECRET_0',
+                 clientHello.random, sr_app_traffic)
             ])
 
 
@@ -4999,7 +5002,10 @@ class TLSConnection(TLSRecordLayer):
 
         with open(self.sslkeylogfile, 'a') as ssl_key_log_file:
             ssl_key_log_file.writelines(
-                f"{label} {client_random.hex()} {secret.hex()}\n"
+                "{0} {1} {2}\n".format(
+                    label,
+                    binascii.hexlify(client_random).decode().upper(),
+                    binascii.hexlify(secret).decode().upper())
                 for label, client_random, secret in keys
             )
 

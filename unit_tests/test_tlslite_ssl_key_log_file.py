@@ -48,7 +48,7 @@ def validate_log_file(log_file_name, labels: Dict[str, List[str]]):
 
 class TestSslKeyLogFile(unittest.TestCase):
     def setUp(self):
-        self.temp_log_file = tempfile.NamedTemporaryFile(delete_on_close=False)
+        self.temp_log_file = tempfile.NamedTemporaryFile(delete=False)
         os.environ['SSLKEYLOGFILE'] = self.temp_log_file.name
 
     def tearDown(self):
@@ -86,7 +86,7 @@ class TestSslKeyLogFile(unittest.TestCase):
             self.assertTrue(validate_log_file(self.temp_log_file.name, expected_labels))
             connection.close()
         except TLSRemoteAlert as alert:
-            print(f"TLS Remote Alert: {alert}")
+            print("TLS Remote Alert: {0}".format(alert))
 
     def test_tlsv1_3(self):
         settings = HandshakeSettings()
@@ -105,7 +105,7 @@ class TestSslKeyLogFile(unittest.TestCase):
             self.assertTrue(validate_log_file(self.temp_log_file.name, expected_labels))
             connection.close()
         except TLSRemoteAlert as alert:
-            print(f"TLS Remote Alert: {alert}")
+            print("TLS Remote Alert: {0}".format(alert))
 
 
 if __name__ == "__main__":
