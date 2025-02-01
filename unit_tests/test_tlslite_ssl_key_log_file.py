@@ -6,7 +6,6 @@ except ImportError:
 import tempfile
 from socket import socket, AF_INET, SOCK_STREAM
 import os
-from typing import Dict, List
 
 import unittest
 
@@ -22,7 +21,7 @@ def create_connection(hostname='www.example.com', port=443, settings=HandshakeSe
     return connection
 
 
-def validate_log_file(log_file_name, labels: Dict[str, List[str]]):
+def validate_log_file(log_file_name, labels):
     """
     TLS1.3 labels
     ------------------
